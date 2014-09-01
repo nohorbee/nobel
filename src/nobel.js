@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var ArgumentParser = require ('argparse').ArgumentParser;
 var Scaffolder = require('./scaffolder');
 
@@ -43,4 +44,3 @@ scaffolder.generate(options);
 } else {
     console.log("Hey!!! You need to pass source and target!");
 }
-
