@@ -32,7 +32,7 @@ parser.addArgument(
 
 
 // TODO look at the folder and project name. Check it' valid
-//
+// Option for generating one method per resource with case, or one method per resource + method
 
 options = parser.parseArgs();
 if (options.target!=null && options.source!=null) {

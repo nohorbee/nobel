@@ -3,7 +3,27 @@
   "description": "RAML based API code generation for arduino",
   "version": "0.1.0",
   "author": "@nohorbee",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nohorbee/nobel.git"
+  },
+  "keywords": [
+    "nobel",
+    "raml",
+    "arduino",
+    "rest",
+    "api",
+    "code-gen",
+    "code generation"
+  ],
+  "bugs": {
+    "url": "https://github.com/nohorbee/nobel/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache 2.0"
+    }
+  ],
   "main": "nobel.js",
   "devDependencies": {
     "grunt": "~0.4.2",
@@ -14,7 +34,6 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-coffeelint": "0.0.8",
     "grunt-mocha-test": "~0.8.1",
-    "coffee-script": "~1.6.3",
     "load-grunt-tasks": "~0.2.1",
     "mocha": "1.15.1",
     "should": "2.1.1"
