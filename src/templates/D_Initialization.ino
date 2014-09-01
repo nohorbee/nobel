@@ -15,9 +15,6 @@ void setup()
 {
  Serial.begin(9600);
   
-  pinMode(ledPin, OUTPUT);
-  servo1.attach(servoPin, 5, 168);
-
   ethStart();
   registerHandlers();
   webserver.setFailureCommand(&dispatch);
