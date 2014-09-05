@@ -1,0 +1,9 @@
+[submodule "arduinoModules/Flash"]
+	path = arduinoModules/Flash
+	url = https://github.com/mikalhart/Flash.git
+[submodule "arduinoModules/arduino-resource"]
+	path = arduinoModules/arduino-resource
+	url = https://github.com/nohorbee/arduino-resource.git
+[submodule "arduinoModules/Webduino"]
+	path = arduinoModules/Webduino
+	url = https://github.com/sirleech/Webduino.git

@@ -1,14 +1,23 @@
 var swig = require('swig');
 var path = require('path');
-var ramlParser = require('raml-parser');
 var fs = require('fs');
+var ramlParser = require('raml-parser');
 
 
 var Scaffolder = module.exports = function(verbose) {
     this.verbose = verbose;
 }
 
-var resources = ['a', 'b', 'c'];
+function saveFile(target, content) {
+    fs.writeFile(target, content, function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log("The file was saved!");
+        }
+    });
+}
+
 
 Scaffolder.prototype.generate = function(options) {
 
@@ -16,9 +25,10 @@ Scaffolder.prototype.generate = function(options) {
         console.log("Generating API with this parameters:");
         console.dir(options);
     }
+
     var resources
     ramlParser.loadFile(options.source).then(function(data) {
-        resources = data.resources;//console.log(JSON.stringify(data, null, 2));
+        resources = data.resources;
 
         var arduino_rest_api = swig.renderFile(path.join(__dirname, 'templates','arduino_rest_api.ino'),
             {
@@ -26,13 +36,9 @@ Scaffolder.prototype.generate = function(options) {
             }
         )
 
-        fs.writeFile(options.target + "/main/main.ino", arduino_rest_api, function(err) {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log("The file was saved!");
-            }
-        });
+        saveFile(path.join(options.target, options.name + ".ino"), arduino_rest_api);
+
+
 
         var renderedA_functions = swig.renderFile(path.join(__dirname, 'templates','A_functions.ino'),
             {
@@ -40,13 +46,7 @@ Scaffolder.prototype.generate = function(options) {
             }
         )
 
-        fs.writeFile(options.target + "/main/A_functions.ino", renderedA_functions, function(err) {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log("The file was saved!");
-            }
-        });
+        saveFile(path.join(options.target, "A_functions.ino"), renderedA_functions);
 
         var renderedB_definitions = swig.renderFile(path.join(__dirname, 'templates','B_definitions.ino'),
             {
@@ -54,13 +54,8 @@ Scaffolder.prototype.generate = function(options) {
             }
         )
 
-        fs.writeFile(options.target + "/main/B_definitions.ino", renderedB_definitions, function(err) {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log("The file was saved!");
-            }
-        });
+        saveFile(path.join(options.target, "B_definitions.ino"), renderedB_definitions);
+
 
         var renderedC_handlers = swig.renderFile(path.join(__dirname, 'templates','C_handlers.ino'),
             {
@@ -68,13 +63,7 @@ Scaffolder.prototype.generate = function(options) {
             }
         )
 
-        fs.writeFile(options.target + "/main/C_handlers.ino", renderedC_handlers, function(err) {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log("The file was saved!");
-            }
-        });
+        saveFile(path.join(options.target, "C_handlers.ino"), renderedC_handlers);
 
         var renderedD_initialization = swig.renderFile(path.join(__dirname, 'templates','D_initialization.ino'),
             {
@@ -82,15 +71,9 @@ Scaffolder.prototype.generate = function(options) {
             }
         )
 
-        fs.writeFile(options.target + "/main/D_initialization.ino", renderedD_initialization, function(err) {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log("The file was saved!");
-            }
-        });
+        saveFile(path.join(options.target, "D_initialization.ino"), renderedD_initialization);
 
-        //console.log(renderedC_handlers);
+
 
     }) ;
 
