@@ -3,7 +3,8 @@ var ArgumentParser = require ('argparse').ArgumentParser;
 var Scaffolder = require('./scaffolder');
 var sb = require('string-builder');
 var path = require('path');
-var fs = require('fs');
+var fs = require('fs.extra');
+
 
 var parser = new ArgumentParser({
     version: '0.0.1',
@@ -36,6 +37,13 @@ parser.addArgument(
     }
 );
 
+parser.addArgument(
+    [ '-il', '--installLibraries' ],
+    {
+        help: 'Include this option and indicate the Arduino Installation folder. Ex: "... -il ~/Documents/Arduino/libraries" if you need Nobel to install the required libraries (Webduino, android-resource, and Flash)'
+    }
+);
+
 
 
 // Option for generating one method per resource with case, or one method per resource + method
@@ -65,6 +73,27 @@ if (err) {
     console.log(sb.toString());
     return;
 }
+
+
+if (options.installLibraries!=null) {
+    installDependencies(options.installLibraries);
+}
+
+function installDependencies(libFolder) {
+    if (fs.existsSync(libFolder)) {
+        console.log("INFO: Installing libraries in: " + libFolder);
+        console.log("Installing " + path.join(__dirname, "arduinoModules","arduino-resource"));
+        fs.copyRecursive(path.join(__dirname, 'templates'), libFolder,
+            function(e) {
+                console.log(e);
+            }
+        );
+    } else {
+        console.log("ERR: "+ libFolder +" does not exist. Libraries installation is skipped");
+    }
+}
+
+return;
 
 var targetFolder = options.target || process.cwd();
 if (fs.existsSync(targetFolder)) {
