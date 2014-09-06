@@ -1,9 +1,9 @@
-[submodule "src/arduinoModules/arduino-resource"]
-	path = src/arduinoModules/arduino-resource
-	url = https://github.com/nohorbee/arduino-resource.git
 [submodule "src/arduinoModules/Webduino"]
 	path = src/arduinoModules/Webduino
 	url = https://github.com/sirleech/Webduino.git
 [submodule "src/arduinoModules/Flash"]
 	path = src/arduinoModules/Flash
 	url = https://github.com/mikalhart/Flash.git
+[submodule "src/arduinoModules/arduino_nobel_resource"]
+	path = src/arduinoModules/arduino_nobel_resource
+	url = https://github.com/nohorbee/arduino_nobel_resource.git
