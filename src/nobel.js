@@ -76,24 +76,36 @@ if (err) {
 
 
 if (options.installLibraries!=null) {
-    installDependencies(options.installLibraries);
+
+    if (!fs.existsSync(options.installLibraries)) {
+        console.log("ERR: "+ options.installLibraries+" does not exist. Libraries installation is skipped");
+        return;
+    }
+
+
+    installDependency(options.installLibraries, "arduino-resource");
+    installDependency(options.installLibraries, "Flash");
+    installDependency(options.installLibraries, "Webduino");
 }
 
-function installDependencies(libFolder) {
-    if (fs.existsSync(libFolder)) {
-        console.log("INFO: Installing libraries in: " + libFolder);
-        console.log("Installing " + path.join(__dirname, "arduinoModules","arduino-resource"));
-        fs.copyRecursive(path.join(__dirname, 'templates'), libFolder,
+function installDependency(libFolder, dependencyName) {
+
+    if (!fs.existsSync(path.join(libFolder, dependencyName))) {
+        fs.copyRecursive(path.join(__dirname, 'arduinoModules', dependencyName), path.join(libFolder, dependencyName),
             function(e) {
-                console.log(e);
+                if (e) {
+                    console.log(e);
+                } else {
+                    fs.unlinkSync(path.join(libFolder, dependencyName,'.git'));
+                }
+
             }
         );
     } else {
-        console.log("ERR: "+ libFolder +" does not exist. Libraries installation is skipped");
+        console.log("INFO: Omitting "+ dependencyName +" because it was already installed");
     }
-}
 
-return;
+}
 
 var targetFolder = options.target || process.cwd();
 if (fs.existsSync(targetFolder)) {
