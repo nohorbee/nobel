@@ -83,9 +83,10 @@ if (options.installLibraries!=null) {
     }
 
 
-    installDependency(options.installLibraries, "arduino-resource");
+    installDependency(options.installLibraries, "arduino_nobel_resource");
     installDependency(options.installLibraries, "Flash");
     installDependency(options.installLibraries, "Webduino");
+
 }
 
 function installDependency(libFolder, dependencyName) {
@@ -97,6 +98,7 @@ function installDependency(libFolder, dependencyName) {
                     console.log(e);
                 } else {
                     fs.unlinkSync(path.join(libFolder, dependencyName,'.git'));
+                    console.log("INFO: " + dependencyName + " was successfully installed");
                 }
 
             }
