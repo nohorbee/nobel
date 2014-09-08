@@ -97,7 +97,10 @@ function installDependency(libFolder, dependencyName) {
                 if (e) {
                     console.log(e);
                 } else {
-                    fs.unlinkSync(path.join(libFolder, dependencyName,'.git'));
+                    if(fs.existsSync(path.join(libFolder, dependencyName,'.git'))) {
+                        fs.unlinkSync(path.join(libFolder, dependencyName,'.git'));
+                        console.log("INFO: removing .git from the installed " + dependencyName)
+                    }
                     console.log("INFO: " + dependencyName + " was successfully installed");
                 }
 
