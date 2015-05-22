@@ -4,3 +4,6 @@
 [submodule "src/arduinoModules/arduino_nobel_resource"]
 	path = src/arduinoModules/arduino_nobel_resource
 	url = https://github.com/nohorbee/arduino_nobel_resource.git
+[submodule "src/arduinoModules/Flash"]
+	path = src/arduinoModules/Flash
+	url = https://github.com/nohorbee/Flash.git
