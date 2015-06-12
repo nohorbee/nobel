@@ -1,3 +1,4 @@
 .idea/
 node_modules/
 src/npm-debug.log
+npm-debug.log

@@ -1,7 +1,7 @@
 {
   "name": "nobel",
   "description": "RAML based API code generation for arduino",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "@nohorbee",
   "repository": {
     "type": "git",
