@@ -272,6 +272,10 @@ In order to test the app, use any program capable of sending HTTP messages via n
 - POST http://[the_ip_DHCP_assigned]/led   (should turn the led ON).
 - DELETE http://[the_ip_DHCP_assigned]/led   (should turn the led OFF).
 
+##Contributing to this code
+- If you are using Atom, please make sure that the following configuration is correct. If not, it will add or remove "\n" and spaces characters from your templates making the unit tests to fail
+![alt text](images/atom-config.png)
+
 
 ##Credits
 

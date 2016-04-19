@@ -1,4 +1,4 @@
-const byte SIZE_RESOURCES = {{ resources.length }}; // constant until resolve what's going on with sizeof
+const byte SIZE_RESOURCES = 1; // constant until resolve what's going on with sizeof
 Handler handlers[SIZE_RESOURCES];
 void parseTail(char* tail, String &url, String &queryParams) {
   String tailToTokenize(tail);
@@ -18,8 +18,8 @@ void dispatch(WebServer &server, WebServer::ConnectionType verb, char url_tail[]
   Serial << F("Available RAM on dispatch start is: ") << availableMemory() << "\r\n";
   // THIS ARRAY CAN'T BE GENERATED GLOBAL, OR PASSED AS A PARAMETER (since the function is a Command). So,
   // The code generator must inject this here (I haven' found a nicer way to do this).
-  FLASH_STRING_ARRAY(resources,{% for resource in resources %}
-      PSTR("/{{ resource.relativeUriPathSegments[0] }}/"),{% endfor %}
+  FLASH_STRING_ARRAY(resources,
+      PSTR("/servo/"),
   );
 
 
