@@ -41,6 +41,7 @@
   "dependencies": {
     "argparse": "~0.1.15",
     "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
     "commander": "2.2.0",
     "fs.extra": "~1.2.1",
     "mocha": "^1.15.1",
