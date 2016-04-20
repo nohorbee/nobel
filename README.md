@@ -1,6 +1,11 @@
 nobel
 =====
 
+[![NPM version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+<!--[![Build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]-->
+
 Nobel (code-generator) creates a REST API for your [Arduino](http://arduino.cc/) board, based on a [RAML](http://raml.org) definition.
 
 ##Description
@@ -282,3 +287,14 @@ In order to test the app, use any program capable of sending HTTP messages via n
 - Without any doubt, I would have quit the idea of creating this project if I didn't find a good HTTP server for Arduino.
 So, it wouldn't be possible at all without [Webduino](https://github.com/sirleech/Webduino) by [sirleech](https://github.com/sirleech). Thanks to him and his amazing job.
 - 2 KB for all my variables? Where to put the *resources* array? In the Program Memory!!! That is possible thanks to the [Flash](https://github.com/mikalhart/Flash) module by [mikalhart](https://github.com/mikalhart).
+
+
+
+[npm-image]: https://img.shields.io/npm/v/nobel.svg?style=flat
+[npm-url]: https://npmjs.org/package/nobel
+[downloads-image]: https://img.shields.io/npm/dm/nobel.svg?style=flat
+[downloads-url]: https://npmjs.org/package/nobel
+[travis-image]: https://img.shields.io/travis/nohorbee/nobel.svg?style=flat
+[travis-url]: https://travis-ci.org/nohorbee/nobel
+[coveralls-image]: https://img.shields.io/coveralls/nohorbee/nobel.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/nohorbee/nobel?branch=master
