@@ -1,5 +1,6 @@
 var ramlParser = require('raml-parser');
 var SwaggerParser = require('swagger-parser');
+var fs = require('fs');
 
 var MultiParser = module.exports = function(verbose) {
     this.verbose = verbose;
@@ -8,10 +9,17 @@ var MultiParser = module.exports = function(verbose) {
 MultiParser.prototype.parse = function(source) {
   var that = this;
   return new Promise(function(fullfill, reject) {
-    var parseFunction;
-    var inputFormat = "SWAGGER"
-    if (inputFormat==="RAML") {
-      
+    var lang = fs.readFileSync(source).toString().split('\n')[0];
+    console.log(lang);
+    if(lang.substring(0,7)==="swagger") {
+      inputFormat = "SWAGGER";
+    } else if (lang.substring(0,6)==="#%RAML") {
+      inputFormat = "RAML";
+    } else {
+      console.log("The file format wasn't recognized. It must be Swagger or RAML");
+      return;
+    }
+    if (inputFormat==="RAML") {  
       parseFunction = that.parseRAML
     } else {
       

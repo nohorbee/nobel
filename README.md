@@ -6,7 +6,7 @@ nobel
 <!--[![Build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]-->
 
-Nobel (code-generator) creates a REST API for your [Arduino](http://arduino.cc/) board, based on a [RAML](http://raml.org) definition.
+Nobel (code-generator) creates a REST API for your [Arduino](http://arduino.cc/) board, based on a [SWAGGER](http://swagger.io/) or [RAML](http://raml.org) definition.
 
 ##Description
 
@@ -15,7 +15,66 @@ Then, you can write the logic for interacting with your physical devices inside 
 
 ### Example
 
-Considering the following RAML code:
+Considering the following Swagger code:
+
+```yaml
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: NobelTestingAPI
+paths:
+  /servo:
+    post:
+      description: |
+        Moves the servo to the specified angle.
+      parameters:
+        - name: angle 
+          in: body
+          description: angle object
+          required: true
+          schema:
+            $ref: '#/definitions/Angle'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Angle'
+    put:
+      description: |
+        Moves the servo buy Adding the specified angle (could be negative)
+      parameters:
+        - name: angle 
+          in: body
+          description: angle object
+          required: true
+          schema:
+            $ref: '#/definitions/Angle'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Angle'
+    get:
+      description: |
+       Returns the current servo angle
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Angle'
+definitions:
+  Angle:
+    description: Task object
+    properties:
+      angle:
+        type: integer
+        description: task object name
+    required:
+      - angle
+```
+
+
+or the following RAML code
 
 ```yaml
 #%RAML 0.8
@@ -44,8 +103,9 @@ title: NobelTestingAPI
           application/json:
             example: |
               { "angle": 71 }
-
 ```
+
+
 
 Nobel generates a project with several files (following the Arduino specs for splitting a program). One of the files contains the *Handlers*, where
 you can write your own code. Associated to the RAML example:
@@ -97,7 +157,7 @@ Installing Nobel is really simple.
 
 Nobel is a Command Line Interface (CLI), which means that you will be executing it from a terminal/command line (I don't see a clear value on building a GUI for this).
 
-`nobel -s [your_raml_file] -n [your_project_name]`
+`nobel -s [your_swagger_or_raml_file] -n [your_project_name]`
 
 The line above shows the minimum parameters set you need to specify in order to scaffold an Arduino Application using Nobel. The result is:
 ```c
@@ -116,7 +176,7 @@ You can find a description of each file in the following sections.
 
 | Argument | Required | Description  |
 | ------------- | ------------- | ----- |
-| -s --source | YES | The RAML file describing the API to implement on the Arduino program. |
+| -s --source | YES | The Swagger or RAML file describing the API to implement on the Arduino program. |
 | -n --name   | YES | The name of your project. Nobel will create a folder with this name, and one main project file inside named like this. |
 | -t --target | NO | The target directory where the project will be placed. If not specified, the project will be created on the folder where you are running Nobel. |
 | -il --installLibraries | NO | If specified, it installs the required Arduino libraries on the folder you specify. [Click here to figure out where this folder is.](http://arduino.cc/en/Guide/Libraries) |
@@ -190,6 +250,7 @@ void resourceAHandler(WebServer &server, WebServer::ConnectionType verb, String 
 
 ##Example
 
+[TODO: Update documentation to show the same example using Swagger]
 This example will expose an API for turning on and off a LED connected to the pin 9.
 
 ###Create the RAML file.
