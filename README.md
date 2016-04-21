@@ -8,7 +8,7 @@ nobel
 
 Nobel (code-generator) creates a REST API for your [Arduino](http://arduino.cc/) board, based on a [SWAGGER](http://swagger.io/) or [RAML](http://raml.org) definition.
 
-##Description
+## Description
 
 Nobel scaffolds an Arduino application that exposes a REST API.
 Then, you can write the logic for interacting with your physical devices inside methods that will be executed when the corresponding URL is invoked.
@@ -137,9 +137,9 @@ void servoHandler(WebServer &server, WebServer::ConnectionType verb, String uriP
 ```
 
 
-##Installation
+## Installation
 
-###Pre-requisites
+### Pre-requisites
 - NodeJS
 - NPM
 - Arduino development environment (This is not needed to run Nobel, but will be needed to make something useful with it).
@@ -153,7 +153,7 @@ Installing Nobel is really simple.
 ... That's all you need.
 
 
-##Usage
+## Usage
 
 Nobel is a Command Line Interface (CLI), which means that you will be executing it from a terminal/command line (I don't see a clear value on building a GUI for this).
 
@@ -182,13 +182,13 @@ You can find a description of each file in the following sections.
 | -il --installLibraries | NO | If specified, it installs the required Arduino libraries on the folder you specify. [Click here to figure out where this folder is.](http://arduino.cc/en/Guide/Libraries) |
 | -h --help | NO | Really? Yes, the user manual will be printed in the terminal/command line |
 
-##Once your app is there
+## Once your app is there
 - You just need to open the project with the Arduino IDE (you can use your preferred one, but all this project has been made using the [Official Arduino IDE](http://arduino.cc/en/Main/Software)).
 **Important**: If you are installing libraries, you will need to restart the Arduino IDE for those to be recognized (I can't do anything about it. Arduino IDE has some tricky parts. Get over it ;)).
 - Compile: If it's not working, something is wrong. Nobel is thought to scaffold a right-away working application (that won't do anything until you put your code on it). If anything goes wrong at anytime, [create an issue](nobel/issues/)
 - Put your own code!
 
-###Files
+### Files
 Coding in Arduino is really a lot of fun (despite of/becouse of/but/your choice) it presents some challenges. The main one here: **Memory**.
 There could be better ways of implementing the code Nobel creates, but I haven't found it yet (feel free of [making your own suggestions](nobel/issues/). That won't hurt my feelings at all).
 Because of this, I needed to hardcode some values (yes, shame on me). You only need to worry about it if you need to **manually** add new resources. If not:
@@ -203,12 +203,12 @@ Because of this, I needed to hardcode some values (yes, shame on me). You only n
 Seeing the example is the best way of understanding how to code.
 *Note*: The scaffolded application [will use DHCP](https://github.com/nohorbee/nobel/issues/8). You can find the code to change this in the `D_Initialization.ino` file (`setup` function)
 
-###Manually Adding new resources
+### Manually Adding new resources
 ***Sorry!*** I'll try to improve this, but this far, for an MVP, it is what it is!
 
 **Don't bother reading this if you are NOT manually adding new resources.**
 
-####A_Functions.ino
+#### A_Functions.ino
 - Since `sizeof` function is not properly working, I needed to hardcode the resources array length on the very first lin:
   `const byte SIZE_RESOURCES = 5; // constant until resolve what's going on with sizeof`. Change it if you manually add or remove resources.
 - Since I'm using a FLASH_ARRAY (basically for placing *big* amounts of data in the program memory instead of the variables space), I can't freely use an array and pass pointers as parameters or return these. So, the array needs to be defined inside the function that will use it. *ugh indeed*.
@@ -224,7 +224,7 @@ Seeing the example is the best way of understanding how to code.
 ```
 When adding one, you will also need to add the proper *Handler* in D_Initialization.ino
 
-####D_Initialization.ino
+#### D_Initialization.ino
 
 - Add a new handler:
 ```c
@@ -239,7 +239,7 @@ handlers[4].method = &resourceEHandler;
 **Important**: The order is the way of matching a resource with it handler!!! It's much more efficient and doable than trying to do some kind of "reflection". So, make sure of adding the handlers in the same order than the resources on the previous step.
 Now, a handler, is basically a pointer to a function (Nobel places these functions on `C_Handlers.ino`). So, if you have `&resourceAHandler`, you will need:
 
-####C_Handlers.ino
+#### C_Handlers.ino
 ```c
 void resourceAHandler(WebServer &server, WebServer::ConnectionType verb, String uriParams, String queryParams) {
   // Your code here (generally, start with a switch)
@@ -248,12 +248,38 @@ void resourceAHandler(WebServer &server, WebServer::ConnectionType verb, String 
 ```
 
 
-##Example
+## Hands On Example
 
-[TODO: Update documentation to show the same example using Swagger]
-This example will expose an API for turning on and off a LED connected to the pin 9.
+### Create the API definition file.
 
-###Create the RAML file.
+You can choose to define your API by using Swagger or RAML. It's up to you ;)
+
+#### Swagger
+
+```yaml
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: NobelExampleAPI
+paths:
+  /led:
+    post:
+      description: |
+        Turns the light on
+      responses:
+        200:
+          description: Successful response
+    delete:
+      description: |
+        Turns the light off
+      responses:
+        200:
+          description: Successful response
+```
+
+#### RAML
+
+
 ```yaml
 #%RAML 0.8
 title: NobelExampleAPI
@@ -263,19 +289,30 @@ title: NobelExampleAPI
   delete:
     description: Turns the light off
 ```
-and save it (the example asumes that it will be called `ramlExample.raml`)
+and save it (the example asumes that it will be called `swaggerExample.yaml` or `ramlExample.raml`)
 
-###Scaffold the application
+### Scaffold the application  
+
+For Swagger
 ```
-nobel -s nobelExample.raml -n ledController
+nobel -s swaggerExample.yaml -n ledController
 ```
-or
+For RAML
+```
+nobel -s ramlExample.raml -n ledController
+```
+#### or
+For Swagger  
+```
+nobel -s nobelExample.raml -n ledController -il [path_to_your_arduino_libraries_directory]
+```
+For RAML  
 ```
 nobel -s nobelExample.raml -n ledController -il [path_to_your_arduino_libraries_directory]
 ```
 if you haven't ever installed the required libraries.
 
-###Put your own code
+### Put your own code
 - Open the IDE.
 
 #### B_Definitions.ino
@@ -302,7 +339,7 @@ void setup() {
 }
 ```
 
-####C_Handlers
+#### C_Handlers
 ```c
 digitalWrite(ledPin, HIGH); // Turns the led on
 digitalWrite(ledPin, LOW); // Turns the led off
@@ -331,19 +368,19 @@ void ledHandler(WebServer &server, WebServer::ConnectionType verb, String uriPar
 }
 ```
 
-###Compile and deploy
+### Compile and deploy
 
 By default, the generated code will make Arduino take an IP by using DHCP. Open a [*Serial Monitor*](http://arduino.cc/en/guide/Environment#serialmonitor) to see the assigned IP.
 In order to test the app, use any program capable of sending HTTP messages via network. [Postman extension for chrome](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en) is my favorite.
 - POST http://[the_ip_DHCP_assigned]/led   (should turn the led ON).
 - DELETE http://[the_ip_DHCP_assigned]/led   (should turn the led OFF).
 
-##Contributing to this code
+## Contributing to this code
 - If you are using Atom, please make sure that the following configuration is correct. If not, it will add or remove "\n" and spaces characters from your templates making the unit tests to fail
 ![alt text](images/atom-config.png)
 
 
-##Credits
+## Credits
 
 - Without any doubt, I would have quit the idea of creating this project if I didn't find a good HTTP server for Arduino.
 So, it wouldn't be possible at all without [Webduino](https://github.com/sirleech/Webduino) by [sirleech](https://github.com/sirleech). Thanks to him and his amazing job.
