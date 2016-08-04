@@ -2,3 +2,7 @@
 node_modules/
 src/npm-debug.log
 npm-debug.log
+.DS_Store
+_site/
+images/.DS_Store
+	
