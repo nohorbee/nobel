@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Nobel : Nobel (code-generator) creates a REST API for your Arduino board, based on a RAML definition.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Nobel</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/nohorbee/nobel">View on GitHub</a>
+
+          <h1 id="project_title">Nobel</h1>
+          <h2 id="project_tagline">Nobel (code-generator) creates a REST API for your Arduino board, based on a RAML definition.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/nohorbee/nobel/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/nohorbee/nobel/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="nobel" class="anchor" href="#nobel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>nobel</h1>
+
+<p><a href="https://npmjs.org/package/nobel"><img src="https://img.shields.io/npm/v/nobel.svg?style=flat" alt="NPM version"></a>
+<a href="https://npmjs.org/package/nobel"><img src="https://img.shields.io/npm/dm/nobel.svg?style=flat" alt="NPM Downloads"></a></p>
+
+
+
+<p>Nobel (code-generator) creates a REST API for your <a href="http://arduino.cc/">Arduino</a> board, based on a <a href="http://swagger.io/">SWAGGER</a> or <a href="http://raml.org">RAML</a> definition.</p>
+
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+
+<p>Nobel scaffolds an Arduino application that exposes a REST API.
+Then, you can write the logic for interacting with your physical devices inside methods that will be executed when the corresponding URL is invoked.</p>
+
+<h3>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h3>
+
+<p>Considering the following Swagger code:</p>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-s"><span class="pl-ent">swagger:</span> <span class="pl-s"><span class="pl-pds">"</span>2.0<span class="pl-pds">"</span></span></span>
+<span class="pl-s"><span class="pl-ent">info:</span></span>
+  <span class="pl-s"><span class="pl-ent">version:</span> <span class="pl-s"><span class="pl-pds">"</span>0.0.1<span class="pl-pds">"</span></span></span>
+  <span class="pl-s"><span class="pl-ent">title:</span> <span class="pl-s">NobelTestingAPI</span></span>
+<span class="pl-s"><span class="pl-ent">paths:</span></span>
+  <span class="pl-s"><span class="pl-ent">/servo:</span></span>
+    <span class="pl-s"><span class="pl-ent">post:</span></span>
+<span class="pl-s">      <span class="pl-ent">description:</span> |</span>
+<span class="pl-s">        Moves the servo to the specified angle.</span>
+<span class="pl-s"></span>      <span class="pl-s"><span class="pl-ent">parameters:</span></span>
+        <span class="pl-s">- <span class="pl-ent">name:</span> <span class="pl-s">angle </span></span>
+          <span class="pl-s"><span class="pl-ent">in:</span> <span class="pl-s">body</span></span>
+          <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">angle object</span></span>
+          <span class="pl-s"><span class="pl-ent">required:</span> <span class="pl-c1">true</span></span>
+          <span class="pl-s"><span class="pl-ent">schema:</span></span>
+            <span class="pl-s"><span class="pl-ent">$ref:</span> <span class="pl-s"><span class="pl-pds">'</span>#/definitions/Angle<span class="pl-pds">'</span></span></span>
+      <span class="pl-s"><span class="pl-ent">responses:</span></span>
+        <span class="pl-s"><span class="pl-ent">200:</span></span>
+          <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">Successful response</span></span>
+          <span class="pl-s"><span class="pl-ent">schema:</span></span>
+            <span class="pl-s"><span class="pl-ent">$ref:</span> <span class="pl-s"><span class="pl-pds">'</span>#/definitions/Angle<span class="pl-pds">'</span></span></span>
+    <span class="pl-s"><span class="pl-ent">put:</span></span>
+<span class="pl-s">      <span class="pl-ent">description:</span> |</span>
+<span class="pl-s">        Moves the servo buy Adding the specified angle (could be negative)</span>
+<span class="pl-s"></span>      <span class="pl-s"><span class="pl-ent">parameters:</span></span>
+        <span class="pl-s">- <span class="pl-ent">name:</span> <span class="pl-s">angle </span></span>
+          <span class="pl-s"><span class="pl-ent">in:</span> <span class="pl-s">body</span></span>
+          <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">angle object</span></span>
+          <span class="pl-s"><span class="pl-ent">required:</span> <span class="pl-c1">true</span></span>
+          <span class="pl-s"><span class="pl-ent">schema:</span></span>
+            <span class="pl-s"><span class="pl-ent">$ref:</span> <span class="pl-s"><span class="pl-pds">'</span>#/definitions/Angle<span class="pl-pds">'</span></span></span>
+      <span class="pl-s"><span class="pl-ent">responses:</span></span>
+        <span class="pl-s"><span class="pl-ent">200:</span></span>
+          <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">Successful response</span></span>
+          <span class="pl-s"><span class="pl-ent">schema:</span></span>
+            <span class="pl-s"><span class="pl-ent">$ref:</span> <span class="pl-s"><span class="pl-pds">'</span>#/definitions/Angle<span class="pl-pds">'</span></span></span>
+    <span class="pl-s"><span class="pl-ent">get:</span></span>
+<span class="pl-s">      <span class="pl-ent">description:</span> |</span>
+<span class="pl-s">       Returns the current servo angle</span>
+<span class="pl-s"></span>      <span class="pl-s"><span class="pl-ent">responses:</span></span>
+        <span class="pl-s"><span class="pl-ent">200:</span></span>
+          <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">Successful response</span></span>
+          <span class="pl-s"><span class="pl-ent">schema:</span></span>
+            <span class="pl-s"><span class="pl-ent">$ref:</span> <span class="pl-s"><span class="pl-pds">'</span>#/definitions/Angle<span class="pl-pds">'</span></span></span>
+<span class="pl-s"><span class="pl-ent">definitions:</span></span>
+  <span class="pl-s"><span class="pl-ent">Angle:</span></span>
+    <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">Task object</span></span>
+    <span class="pl-s"><span class="pl-ent">properties:</span></span>
+      <span class="pl-s"><span class="pl-ent">angle:</span></span>
+        <span class="pl-s"><span class="pl-ent">type:</span> <span class="pl-s">integer</span></span>
+        <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">task object name</span></span>
+    <span class="pl-s"><span class="pl-ent">required:</span></span>
+      <span class="pl-s">- <span class="pl-s">angle</span></span></pre></div>
+
+<p>or the following RAML code</p>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-c">#%RAML 0.8</span>
+<span class="pl-s"><span class="pl-ent">title:</span> <span class="pl-s">NobelTestingAPI</span></span>
+<span class="pl-s"><span class="pl-ent">/servo:</span></span>
+  <span class="pl-s"><span class="pl-ent">post:</span></span>
+<span class="pl-s">    <span class="pl-ent">description:</span> |</span>
+<span class="pl-s">      Moves the servo to the specified angle.</span>
+<span class="pl-s"></span>    <span class="pl-s"><span class="pl-ent">body:</span></span>
+      <span class="pl-s"><span class="pl-ent">application/json:</span></span>
+<span class="pl-s">        <span class="pl-ent">example:</span> |</span>
+<span class="pl-s">          {"angle": 71}</span>
+<span class="pl-s"></span>  <span class="pl-s"><span class="pl-ent">put:</span></span>
+<span class="pl-s">    <span class="pl-ent">description:</span> |</span>
+<span class="pl-s">      Moves the servo buy Adding the specified angle (could be negative)</span>
+<span class="pl-s"></span>    <span class="pl-s"><span class="pl-ent">body:</span></span>
+      <span class="pl-s"><span class="pl-ent">application/json:</span></span>
+<span class="pl-s">        <span class="pl-ent">example:</span> |</span>
+<span class="pl-s">          {"angle": -10}</span>
+<span class="pl-s"></span>  <span class="pl-s"><span class="pl-ent">get:</span></span>
+<span class="pl-s">    <span class="pl-ent">description:</span> |</span>
+<span class="pl-s">      Returns the current servo angle</span>
+<span class="pl-s"></span>    <span class="pl-s"><span class="pl-ent">responses:</span></span>
+      <span class="pl-s"><span class="pl-ent">200:</span></span>
+        <span class="pl-s"><span class="pl-ent">body:</span></span>
+          <span class="pl-s"><span class="pl-ent">application/json:</span></span>
+<span class="pl-s">            <span class="pl-ent">example:</span> |</span>
+<span class="pl-s">              { "angle": 71 }</span></pre></div>
+
+<p>Nobel generates a project with several files (following the Arduino specs for splitting a program). One of the files contains the <em>Handlers</em>, where
+you can write your own code. Associated to the RAML example:</p>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-c">// Handlers</span>
+
+<span class="pl-k">void</span> <span class="pl-en">servoHandler</span>(WebServer &amp;server, WebServer::ConnectionType verb, String uriParams, String queryParams) {
+  <span class="pl-k">switch</span> (verb)
+    {
+
+    <span class="pl-k">case</span> WebServer::POST:
+        server.<span class="pl-c1">httpSuccess</span>();
+        <span class="pl-k">break</span>;
+
+    <span class="pl-k">case</span> WebServer::PUT:
+        server.<span class="pl-c1">httpSuccess</span>();
+        <span class="pl-k">break</span>;
+
+    <span class="pl-k">case</span> WebServer::GET:
+        server.<span class="pl-c1">httpSuccess</span>();
+        <span class="pl-k">break</span>;
+
+    <span class="pl-k">default</span>:
+        server.<span class="pl-c1">httpFail</span>();
+    }
+}
+</pre></div>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a id="pre-requisites" class="anchor" href="#pre-requisites" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pre-requisites</h3>
+
+<ul>
+<li>NodeJS</li>
+<li>NPM</li>
+<li>Arduino development environment (This is not needed to run Nobel, but will be needed to make something useful with it).</li>
+</ul>
+
+<h3>
+<a id="install-nobel" class="anchor" href="#install-nobel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install Nobel</h3>
+
+<p>Installing Nobel is really simple.</p>
+
+<ul>
+<li>Open a terminal/command line</li>
+<li>type <code>npm install -g nobel</code>
+</li>
+</ul>
+
+<p>... That's all you need.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Nobel is a Command Line Interface (CLI), which means that you will be executing it from a terminal/command line (I don't see a clear value on building a GUI for this).</p>
+
+<p><code>nobel -s [your_swagger_or_raml_file] -n [your_project_name]</code></p>
+
+<p>The line above shows the minimum parameters set you need to specify in order to scaffold an Arduino Application using Nobel. The result is:</p>
+
+<div class="highlight highlight-source-c"><pre>.
+└── myArduinoRobot
+    ├── A_functions.ino
+    ├── B_definitions.ino
+    ├── C_handlers.ino
+    ├── D_initialization.ino
+    └── myArduinoRobot.ino</pre></div>
+
+<p>You can find a description of each file in the following sections.</p>
+
+<h3>
+<a id="arguments" class="anchor" href="#arguments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arguments</h3>
+
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-s --source</td>
+<td>YES</td>
+<td>The Swagger or RAML file describing the API to implement on the Arduino program.</td>
+</tr>
+<tr>
+<td>-n --name</td>
+<td>YES</td>
+<td>The name of your project. Nobel will create a folder with this name, and one main project file inside named like this.</td>
+</tr>
+<tr>
+<td>-t --target</td>
+<td>NO</td>
+<td>The target directory where the project will be placed. If not specified, the project will be created on the folder where you are running Nobel.</td>
+</tr>
+<tr>
+<td>-il --installLibraries</td>
+<td>NO</td>
+<td>If specified, it installs the required Arduino libraries on the folder you specify. <a href="http://arduino.cc/en/Guide/Libraries">Click here to figure out where this folder is.</a>
+</td>
+</tr>
+<tr>
+<td>-h --help</td>
+<td>NO</td>
+<td>Really? Yes, the user manual will be printed in the terminal/command line</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="once-your-app-is-there" class="anchor" href="#once-your-app-is-there" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Once your app is there</h2>
+
+<ul>
+<li>You just need to open the project with the Arduino IDE (you can use your preferred one, but all this project has been made using the <a href="http://arduino.cc/en/Main/Software">Official Arduino IDE</a>).
+<strong>Important</strong>: If you are installing libraries, you will need to restart the Arduino IDE for those to be recognized (I can't do anything about it. Arduino IDE has some tricky parts. Get over it ;)).</li>
+<li>Compile: If it's not working, something is wrong. Nobel is thought to scaffold a right-away working application (that won't do anything until you put your code on it). If anything goes wrong at anytime, <a href="nobel/issues/">create an issue</a>
+</li>
+<li>Put your own code!</li>
+</ul>
+
+<h3>
+<a id="files" class="anchor" href="#files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Files</h3>
+
+<p>Coding in Arduino is really a lot of fun (despite of/becouse of/but/your choice) it presents some challenges. The main one here: <strong>Memory</strong>.
+There could be better ways of implementing the code Nobel creates, but I haven't found it yet (feel free of <a href="nobel/issues/">making your own suggestions</a>. That won't hurt my feelings at all).
+Because of this, I needed to hardcode some values (yes, shame on me). You only need to worry about it if you need to <strong>manually</strong> add new resources. If not:</p>
+
+<ul>
+<li>[your_project_name].ino: Main file. It only includes the libraries required by all of the other files. No need to touch at all.</li>
+<li>A_functions.ino: Contains functions that will be used by the application to parse and route the URLs to the proper handlers (It is not that simple to put these into a library, thanks for asking).</li>
+<li>B_definitions.ino: You will probably need to define some variables that you will use later in a global way. Even though you will probably initialize these
+on <code>D_initialization.ino</code>, you will use these in <code>C_Handlers.ino</code>, and, since Arduino concatenates in alphabetical order (excepting for the main file),
+not declaring the variables here, will result in errors.</li>
+<li>C_Handlers.ino: You will write your logic here!!! A function will be generated per each result, and a SWITCH CASE inside of it, to determine the HTTP verb being invoked (this could be changing in the future, supporting other code styles. <a href="https://github.com/nohorbee/nobel/issues/4">For Example: One function per Resource-Verb combination</a>)</li>
+<li>D_Initialization.ino: You need a place where everything starts. The <code>setup</code> and <code>loop</code> functions (which Arduino calls when <em>booting</em>) are placed here for you to complete as needed.</li>
+</ul>
+
+<p>Seeing the example is the best way of understanding how to code.
+<em>Note</em>: The scaffolded application <a href="https://github.com/nohorbee/nobel/issues/8">will use DHCP</a>. You can find the code to change this in the <code>D_Initialization.ino</code> file (<code>setup</code> function)</p>
+
+<h3>
+<a id="manually-adding-new-resources" class="anchor" href="#manually-adding-new-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Manually Adding new resources</h3>
+
+<p><strong><em>Sorry!</em></strong> I'll try to improve this, but this far, for an MVP, it is what it is!</p>
+
+<p><strong>Don't bother reading this if you are NOT manually adding new resources.</strong></p>
+
+<h4>
+<a id="a_functionsino" class="anchor" href="#a_functionsino" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>A_Functions.ino</h4>
+
+<ul>
+<li>Since <code>sizeof</code> function is not properly working, I needed to hardcode the resources array length on the very first lin:
+<code>const byte SIZE_RESOURCES = 5; // constant until resolve what's going on with sizeof</code>. Change it if you manually add or remove resources.</li>
+<li>Since I'm using a FLASH_ARRAY (basically for placing <em>big</em> amounts of data in the program memory instead of the variables space), I can't freely use an array and pass pointers as parameters or return these. So, the array needs to be defined inside the function that will use it. <em>ugh indeed</em>.</li>
+</ul>
+
+<div class="highlight highlight-source-c"><pre> <span class="pl-en">FLASH_STRING_ARRAY</span>(resources,
+      <span class="pl-en">PSTR</span>(<span class="pl-s"><span class="pl-pds">"</span>/resourceA/<span class="pl-pds">"</span></span>),
+      PSTR(<span class="pl-s"><span class="pl-pds">"</span>/resourceB/<span class="pl-pds">"</span></span>),
+      PSTR(<span class="pl-s"><span class="pl-pds">"</span>/resourceC/<span class="pl-pds">"</span></span>),
+      PSTR(<span class="pl-s"><span class="pl-pds">"</span>/resourceD/<span class="pl-pds">"</span></span>),
+      PSTR(<span class="pl-s"><span class="pl-pds">"</span>/resourceE/<span class="pl-pds">"</span></span>)
+      <span class="pl-c">// add more if needed</span>
+  );</pre></div>
+
+<p>When adding one, you will also need to add the proper <em>Handler</em> in D_Initialization.ino</p>
+
+<h4>
+<a id="d_initializationino" class="anchor" href="#d_initializationino" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>D_Initialization.ino</h4>
+
+<ul>
+<li>Add a new handler:</li>
+</ul>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-k">void</span> <span class="pl-en">registerHandlers</span>() {
+handlers[<span class="pl-c1">0</span>].<span class="pl-smi">method</span> = &amp;resourceAHandler;
+handlers[<span class="pl-c1">1</span>].<span class="pl-smi">method</span> = &amp;resourceBlHandler;
+handlers[<span class="pl-c1">2</span>].<span class="pl-smi">method</span> = &amp;resourceCHandler;
+handlers[<span class="pl-c1">3</span>].<span class="pl-smi">method</span> = &amp;resourceDHandler;
+handlers[<span class="pl-c1">4</span>].<span class="pl-smi">method</span> = &amp;resourceEHandler;
+}</pre></div>
+
+<p><strong>Important</strong>: The order is the way of matching a resource with it handler!!! It's much more efficient and doable than trying to do some kind of "reflection". So, make sure of adding the handlers in the same order than the resources on the previous step.
+Now, a handler, is basically a pointer to a function (Nobel places these functions on <code>C_Handlers.ino</code>). So, if you have <code>&amp;resourceAHandler</code>, you will need:</p>
+
+<h4>
+<a id="c_handlersino" class="anchor" href="#c_handlersino" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>C_Handlers.ino</h4>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-k">void</span> <span class="pl-en">resourceAHandler</span>(WebServer &amp;server, WebServer::ConnectionType verb, String uriParams, String queryParams) {
+  <span class="pl-c">// Your code here (generally, start with a switch)</span>
+}
+</pre></div>
+
+<h2>
+<a id="hands-on-example" class="anchor" href="#hands-on-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Hands On Example</h2>
+
+<h3>
+<a id="create-the-api-definition-file" class="anchor" href="#create-the-api-definition-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create the API definition file.</h3>
+
+<p>You can choose to define your API by using Swagger or RAML. It's up to you ;)</p>
+
+<h4>
+<a id="swagger" class="anchor" href="#swagger" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Swagger</h4>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-s"><span class="pl-ent">swagger:</span> <span class="pl-s"><span class="pl-pds">"</span>2.0<span class="pl-pds">"</span></span></span>
+<span class="pl-s"><span class="pl-ent">info:</span></span>
+  <span class="pl-s"><span class="pl-ent">version:</span> <span class="pl-s"><span class="pl-pds">"</span>0.0.1<span class="pl-pds">"</span></span></span>
+  <span class="pl-s"><span class="pl-ent">title:</span> <span class="pl-s">NobelExampleAPI</span></span>
+<span class="pl-s"><span class="pl-ent">paths:</span></span>
+  <span class="pl-s"><span class="pl-ent">/led:</span></span>
+    <span class="pl-s"><span class="pl-ent">post:</span></span>
+<span class="pl-s">      <span class="pl-ent">description:</span> |</span>
+<span class="pl-s">        Turns the light on</span>
+<span class="pl-s"></span>      <span class="pl-s"><span class="pl-ent">responses:</span></span>
+        <span class="pl-s"><span class="pl-ent">200:</span></span>
+          <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">Successful response</span></span>
+    <span class="pl-s"><span class="pl-ent">delete:</span></span>
+<span class="pl-s">      <span class="pl-ent">description:</span> |</span>
+<span class="pl-s">        Turns the light off</span>
+<span class="pl-s"></span>      <span class="pl-s"><span class="pl-ent">responses:</span></span>
+        <span class="pl-s"><span class="pl-ent">200:</span></span>
+          <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">Successful response</span></span></pre></div>
+
+<h4>
+<a id="raml" class="anchor" href="#raml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>RAML</h4>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-c">#%RAML 0.8</span>
+<span class="pl-s"><span class="pl-ent">title:</span> <span class="pl-s">NobelExampleAPI</span></span>
+<span class="pl-s"><span class="pl-ent">/led:</span></span>
+  <span class="pl-s"><span class="pl-ent">post:</span></span>
+    <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">Turns the light on</span></span>
+  <span class="pl-s"><span class="pl-ent">delete:</span></span>
+    <span class="pl-s"><span class="pl-ent">description:</span> <span class="pl-s">Turns the light off</span></span></pre></div>
+
+<p>and save it (the example asumes that it will be called <code>swaggerExample.yaml</code> or <code>ramlExample.raml</code>)</p>
+
+<h3>
+<a id="scaffold-the-application" class="anchor" href="#scaffold-the-application" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Scaffold the application</h3>
+
+<p>For Swagger</p>
+
+<pre><code>nobel -s swaggerExample.yaml -n ledController
+</code></pre>
+
+<p>For RAML</p>
+
+<pre><code>nobel -s ramlExample.raml -n ledController
+</code></pre>
+
+<h4>
+<a id="or" class="anchor" href="#or" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>or</h4>
+
+<p>For Swagger  </p>
+
+<pre><code>nobel -s nobelExample.raml -n ledController -il [path_to_your_arduino_libraries_directory]
+</code></pre>
+
+<p>For RAML  </p>
+
+<pre><code>nobel -s nobelExample.raml -n ledController -il [path_to_your_arduino_libraries_directory]
+</code></pre>
+
+<p>if you haven't ever installed the required libraries.</p>
+
+<h3>
+<a id="put-your-own-code" class="anchor" href="#put-your-own-code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Put your own code</h3>
+
+<ul>
+<li>Open the IDE.</li>
+</ul>
+
+<h4>
+<a id="b_definitionsino" class="anchor" href="#b_definitionsino" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>B_Definitions.ino</h4>
+
+<p>Add this line:</p>
+
+<div class="highlight highlight-source-c"><pre>byte ledPin = <span class="pl-c1">9</span>; <span class="pl-c">// It's a good practice to use a variable to semantically represent your Arduino output.</span></pre></div>
+
+<h4>
+<a id="d_initializationino-1" class="anchor" href="#d_initializationino-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>D_Initialization.ino</h4>
+
+<p>Add this line in the <code>void setup()</code> function</p>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-en">pinMode</span>(ledPin, OUTPUT); <span class="pl-c">// We are specifying that the pin 9 will be used as an output.</span></pre></div>
+
+<p>The function code should look like this:</p>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-k">void</span> <span class="pl-en">setup</span>() {
+  Serial.<span class="pl-c1">begin</span>(<span class="pl-c1">9600</span>);
+  <span class="pl-c1">pinMode</span>(ledPin, OUTPUT);
+  <span class="pl-c1">ethStart</span>();
+  <span class="pl-c1">registerHandlers</span>();
+  webserver.<span class="pl-c1">setFailureCommand</span>(&amp;dispatch);
+  webserver.<span class="pl-c1">begin</span>();
+}</pre></div>
+
+<h4>
+<a id="c_handlers" class="anchor" href="#c_handlers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>C_Handlers</h4>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-en">digitalWrite</span>(ledPin, HIGH); <span class="pl-c">// Turns the led on</span>
+<span class="pl-en">digitalWrite</span>(ledPin, LOW); <span class="pl-c">// Turns the led off</span></pre></div>
+
+<p>Let's add both calls to the <code>POST</code> and <code>DELETE</code> methods, and the final code should look like this:</p>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-k">void</span> <span class="pl-en">ledHandler</span>(WebServer &amp;server, WebServer::ConnectionType verb, String uriParams, String queryParams) {
+  <span class="pl-k">switch</span> (verb)
+    {
+
+    <span class="pl-k">case</span> WebServer::POST:
+        <span class="pl-c1">digitalWrite</span>(ledPin, HIGH);
+        server.<span class="pl-c1">httpSuccess</span>();
+        <span class="pl-k">break</span>;
+
+    <span class="pl-k">case</span> WebServer::DELETE:
+        <span class="pl-c1">digitalWrite</span>(ledPin, LOW);
+        server.<span class="pl-c1">httpSuccess</span>();
+        <span class="pl-k">break</span>;
+
+    <span class="pl-k">default</span>:
+        server.<span class="pl-c1">httpFail</span>();
+    }
+}</pre></div>
+
+<h3>
+<a id="compile-and-deploy" class="anchor" href="#compile-and-deploy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Compile and deploy</h3>
+
+<p>By default, the generated code will make Arduino take an IP by using DHCP. Open a <a href="http://arduino.cc/en/guide/Environment#serialmonitor"><em>Serial Monitor</em></a> to see the assigned IP.
+In order to test the app, use any program capable of sending HTTP messages via network. <a href="https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en">Postman extension for chrome</a> is my favorite.</p>
+
+<ul>
+<li>POST http://[the_ip_DHCP_assigned]/led   (should turn the led ON).</li>
+<li>DELETE http://[the_ip_DHCP_assigned]/led   (should turn the led OFF).</li>
+</ul>
+
+<h2>
+<a id="contributing-to-this-code" class="anchor" href="#contributing-to-this-code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing to this code</h2>
+
+<ul>
+<li>If you are using Atom, please make sure that the following configuration is correct. If not, it will add or remove "\n" and spaces characters from your templates making the unit tests to fail
+<img src="images/atom-config.png" alt="alt text">
+</li>
+</ul>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credits</h2>
+
+<ul>
+<li>Without any doubt, I would have quit the idea of creating this project if I didn't find a good HTTP server for Arduino.
+So, it wouldn't be possible at all without <a href="https://github.com/sirleech/Webduino">Webduino</a> by <a href="https://github.com/sirleech">sirleech</a>. Thanks to him and his amazing job.</li>
+<li>2 KB for all my variables? Where to put the <em>resources</em> array? In the Program Memory!!! That is possible thanks to the <a href="https://github.com/mikalhart/Flash">Flash</a> module by <a href="https://github.com/mikalhart">mikalhart</a>.</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Nobel maintained by <a href="https://github.com/nohorbee">nohorbee</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
