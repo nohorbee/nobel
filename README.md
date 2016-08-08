@@ -376,6 +376,10 @@ In order to test the app, use any program capable of sending HTTP messages via n
 - DELETE http://[the_ip_DHCP_assigned]/led   (should turn the led OFF).
 
 ## Contributing to this code
+
+You can simply Clone this repo, make the changes you want, and make a Pull Request.
+If doing that, please be aware that this repo points to submodules and so, for testing purposes, you should make sure that the code on these is also cloned by running this command (after cloning): `git submodule update --init --recursive`
+
 - If you are using Atom, please make sure that the following configuration is correct. If not, it will add or remove "\n" and spaces characters from your templates making the unit tests to fail
 ![alt text](images/atom-config.png)
 
