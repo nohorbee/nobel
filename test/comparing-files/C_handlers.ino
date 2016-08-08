@@ -1,5 +1,5 @@
 // Handlers
-
+void servoHandler(WebServer &server, WebServer::ConnectionType verb, String uriParams, String queryParams);
 void servoHandler(WebServer &server, WebServer::ConnectionType verb, String uriParams, String queryParams) {
   switch (verb)
     {
@@ -17,4 +17,3 @@ void servoHandler(WebServer &server, WebServer::ConnectionType verb, String uriP
         server.httpFail();
     }
 }
-

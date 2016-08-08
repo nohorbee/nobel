@@ -12,7 +12,7 @@ void parseTail(char* tail, String &url, String &queryParams) {
   }
 }
 
-
+void dispatch(WebServer &server, WebServer::ConnectionType verb, char url_tail[], bool tail_complete);
 void dispatch(WebServer &server, WebServer::ConnectionType verb, char url_tail[], bool tail_complete) {
   Serial.println();
   Serial << F("Available RAM on dispatch start is: ") << availableMemory() << "\r\n";
@@ -178,7 +178,7 @@ int lookUp(String url, _FLASH_STRING_ARRAY resources) {
 }
 
 
-
+String getPostParameter(WebServer server, char paramName[16]);
 String getPostParameter(WebServer server, char paramName[16]) {
 
     bool repeat;
